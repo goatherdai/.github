@@ -16,12 +16,13 @@ no telemetry, and no hosted service.
   OpenAI-compatible API or the Anthropic Messages API, stores sessions and
   memory in local SQLite, and speaks MCP as both client and server.
 
-- **[goatherd](https://github.com/goatherdai/goatherd)** — the layer
-  underneath: a content-addressed, append-only execution trace for agents, plus
-  the scope tree, sandboxed workspaces, and supervision rules to steer a run in
-  real time. The runtime adds execution scopes, the merge gate,
-  settlement/recovery, sandbox backends (Landlock, Seatbelt, winacl), tasks,
-  and supervision. (Ships as `goatherd-kernel` and `goatherd-runtime`.)
+- **[goatherd-runtime](https://github.com/goatherdai/goatherd-runtime) — the runtime
+  adds execution scopes, the merge gate,
+  settlement/recovery, sandbox backends (Landlock, Seatbelt, winacl, croft), tasks,
+  and supervision.
+
+- **[goatherd-kernel](https://github.com/goatherdai/goatherd-kernel) — the layer
+  underneath: a content-addressed, append-only execution trace for agents.
 
 - **[croft](https://github.com/goatherdai/croft)** — an isolated,
   snapshot-backed workspace on containerd's overlayfs snapshotter: provisioned
