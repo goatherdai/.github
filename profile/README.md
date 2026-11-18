@@ -1,6 +1,6 @@
-# goatherdai
+# Goatherd AI
 
-Local-first Go software stack for AI agents that do real work on your machine.
+A fast Go software stack for orchestrated AI agents that do real code work efficiently.
 
 Everything here ships as source and plain binaries, keeps its state in files
 you own (SQLite, git worktrees, containerd snapshots), and assumes no accounts,
@@ -16,13 +16,13 @@ no telemetry, and no hosted service.
   OpenAI-compatible API or the Anthropic Messages API, stores sessions and
   memory in local SQLite, and speaks MCP as both client and server.
 
-- **[goatherd-runtime](https://github.com/goatherdai/goatherd-runtime)** — the runtime
-  adds execution scopes, the merge gate,
-  settlement/recovery, sandbox backends (Landlock, Seatbelt, winacl, croft), tasks,
-  and supervision.
-
 - **[goatherd-kernel](https://github.com/goatherdai/goatherd-kernel)** — the layer
   underneath: a content-addressed, append-only execution trace for agents.
+
+- **[goatherd-runtime](https://github.com/goatherdai/goatherd-runtime)** — the runtime
+  adds execution scopes, the merge gate, settlement/recovery, sandbox backends (
+  Landlock, Seatbelt, winacl, croft), tasks,
+  and supervision.
 
 - **[croft](https://github.com/goatherdai/croft)** — an isolated,
   snapshot-backed workspace on containerd's overlayfs snapshotter: provisioned
@@ -32,10 +32,13 @@ no telemetry, and no hosted service.
 
 ## How they stack
 
-```
-yaah           the harness you run — agents, tools, MCP, TUI/REPL/web
- └─ goatherd   scopes, dispatch, settlement, supervision, sandbox backends
-     └─ croft  containerd overlayfs workspaces with capture/rollback/fork
+```mermaid
+flowchart TD
+    yaah["yaah — the harness you run<br/>agents, tools, MCP, TUI/REPL/web"]
+    goatherd["goatherd — scopes, dispatch, settlement,<br/>supervision, sandbox backends"]
+    croft["croft — containerd overlayfs workspaces<br/>with capture/rollback/fork"]
+
+    yaah --> goatherd --> croft
 ```
 
 Each layer is usable on its own and honest about what it does not do. yaah
