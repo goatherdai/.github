@@ -34,7 +34,7 @@ no telemetry, and no hosted service.
 
 ```mermaid
 flowchart TD
-    yaah["yaah — the harness you run<br/>agents, tools, MCP, TUI/REPL/web"]
+    yaah["yaah — the harness you run<br/>agents, tools, MCP, ACP/TUI/REPL/web"]
     goatherd["goatherd — scopes, dispatch, settlement,<br/>supervision, sandbox backends"]
     croft["croft — containerd overlayfs workspaces<br/>with capture/rollback/fork"]
 
