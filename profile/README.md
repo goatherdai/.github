@@ -47,15 +47,15 @@ flowchart TD
     kernel["goatherd-kernel<br/>content-addressed, append-only<br/>execution trace store"]
     croft["croft<br/>containerd overlayfs workspaces<br/>with capture/rollback/fork"]
 
-    yaah --> goatherd
+    yaah --> runtime
     runtime --> kernel
     runtime --> croft
 ```
 
 Each layer is usable on its own and honest about what it does not do. yaah
 runs fine without croft (worktree isolation by default); croft knows nothing
-about agents; goatherd steers scopes without caring which harness created
-them.
+about agents; goatherd-runtime steers scopes without caring which harness
+created them.
 
 ## Principles
 
