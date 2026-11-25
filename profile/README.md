@@ -8,7 +8,7 @@ no telemetry, and no hosted service.
 
 ## Anatomy of the farm
 
-- **The farm — [yaah](https://github.com/goatherdai/yaah)** — a vendor-free
+- **[yaah](https://github.com/goatherdai/yaah)** — a vendor-free
   agent harness. One Go binary holding the whole operation: agent harness,
   toolbelt, sessions and memory in local SQLite, and MCP as both client and
   server, plus any OpenAI-compatible API or the Anthropic Messages API.
