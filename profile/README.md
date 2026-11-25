@@ -44,9 +44,12 @@ no telemetry, and no hosted service.
 flowchart TD
     yaah["yaah — the farm you run<br/>harness, tools, MCP, ACP/TUI/REPL/web"]
     goatherd["goatherd-runtime — scopes, dispatch, settlement,<br/>supervision, sandbox backends"]
+    kernel["goatherd-kernel — content-addressed, append-only<br/>execution trace store"]
     croft["croft — containerd overlayfs workspaces<br/>with capture/rollback/fork"]
 
-    yaah --> goatherd --> croft
+    yaah --> goatherd
+    goatherd --> kernel
+    goatherd --> croft
 ```
 
 Each layer is usable on its own and honest about what it does not do. yaah
