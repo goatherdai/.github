@@ -6,36 +6,44 @@ Everything here ships as source and plain binaries, keeps its state in files
 you own (SQLite, git worktrees, containerd snapshots), and assumes no accounts,
 no telemetry, and no hosted service.
 
-## The herd
+## Anatomy of the farm
 
-- **[yaah](https://github.com/goatherdai/yaah)** — a vendor-free agent harness.
-  One Go binary orchestrates a team of AI coding agents: the orchestrator plans
-  and judges, sub-agents research, implement, test, and review in parallel
-  inside isolated worlds, and their work comes back as sealed proposals the
-  orchestrator reviews before anything reaches your tree. Speaks any
-  OpenAI-compatible API or the Anthropic Messages API, stores sessions and
-  memory in local SQLite, and speaks MCP as both client and server.
+- **The farm — [yaah](https://github.com/goatherdai/yaah)** — a vendor-free
+  agent harness. One Go binary holding the whole operation: agent harness,
+  toolbelt, sessions and memory in local SQLite, and MCP as both client and
+  server, plus any OpenAI-compatible API or the Anthropic Messages API.
 
-- **[goatherd-kernel](https://github.com/goatherdai/goatherd-kernel)** — the layer
-  underneath: a content-addressed, append-only execution trace for agents.
+- **The goatherd — yaah's meta-agent.** The orchestrator you talk to: it plans
+  and judges, dispatches specialists, and reviews everything before it reaches
+  your tree.
 
-- **[goatherd-runtime](https://github.com/goatherdai/goatherd-runtime)** — the runtime
-  adds execution scopes, the merge gate, settlement/recovery, sandbox backends (
-  Landlock, Seatbelt, winacl, croft), tasks,
-  and supervision.
+- **The herd — yaah's sub-agents.** The team the goatherd dispatches.
+  Four roles are built in — `developer`, `analyst`, `tester`, and `reviewer` —
+  and any number of custom roles can be added as markdown role files
+  (`.agents/roles/*.md` per project, `~/.agents/roles/` for all projects).
 
-- **[croft](https://github.com/goatherdai/croft)** — an isolated,
-  snapshot-backed workspace on containerd's overlayfs snapshotter: provisioned
-  from an image, worked in-band, and captured into states that outlive the
-  sandbox — cheap checkpoints, exact O(1) rollback, and forks at layer-sharing
-  cost. Linux-only, deliberately not a container runtime.
+- **The pasture** — where the herd works:
+
+  - **[goatherd-kernel](https://github.com/goatherdai/goatherd-kernel)** — the layer
+    underneath: a content-addressed, append-only execution trace for agents.
+
+  - **[goatherd-runtime](https://github.com/goatherdai/goatherd-runtime)** — the runtime
+    adds execution scopes, the merge gate, settlement/recovery, sandbox backends (
+    Landlock, Seatbelt, winacl, croft), tasks,
+    and supervision.
+
+  - **[croft](https://github.com/goatherdai/croft)** — an isolated,
+    snapshot-backed workspace on containerd's overlayfs snapshotter: provisioned
+    from an image, worked in-band, and captured into states that outlive the
+    sandbox — cheap checkpoints, exact O(1) rollback, and forks at layer-sharing
+    cost. Linux-only, deliberately not a container runtime.
 
 ## How they stack
 
 ```mermaid
 flowchart TD
-    yaah["yaah — the harness you run<br/>agents, tools, MCP, ACP/TUI/REPL/web"]
-    goatherd["goatherd — scopes, dispatch, settlement,<br/>supervision, sandbox backends"]
+    yaah["yaah — the farm you run<br/>harness, tools, MCP, ACP/TUI/REPL/web"]
+    goatherd["goatherd-runtime — scopes, dispatch, settlement,<br/>supervision, sandbox backends"]
     croft["croft — containerd overlayfs workspaces<br/>with capture/rollback/fork"]
 
     yaah --> goatherd --> croft
