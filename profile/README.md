@@ -64,4 +64,8 @@ them.
 - **Your machine.** State lives in local files — SQLite, optional PostgreSQL, git worktrees,
   overlayfs layers — never behind someone's API.
 - **Isolation you can name.** Where the host can confine a dispatch, it's
-  kernel-enforced (Landlock, Seatbelt, or WinACLacl) with a writable root the
+  kernel-enforced (Landlock, Seatbelt, or winacl) with a writable root the
+  process chose; where it can't, the docs say so.
+- **Reviewable by default.** Agents propose, the orchestrator disposes — a
+  rejected attempt costs one dispatch and leaves your tree untouched.
+- **Permissive licenses.** MIT (yaah is MIT OR Apache-2.0).
